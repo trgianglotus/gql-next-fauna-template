@@ -4,7 +4,7 @@
     "dev": "next",
     "build": "yarn setup && next build",
     "start": "next start",
-    "setup": "node ./scripts/setup.js"
+    "setup": "node ./scripts/setup.ts"
   },
   "dependencies": {
     "classnames": "2.3.1",

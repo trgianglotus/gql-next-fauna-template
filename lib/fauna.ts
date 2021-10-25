@@ -31,7 +31,7 @@ export const listGuestbookEntries = () => {
     .then(({ entries: { data } }) => data)
 }
 
-export const createGuestbookEntry = (newEntry) => {
+export const createGuestbookEntry = (newEntry: any) => {
   const mutation = gql`
     mutation CreateGuestbookEntry($input: GuestbookEntryInput!) {
       createGuestbookEntry(data: $input) {
