@@ -11,7 +11,7 @@ import LoadingSpinner from '@/components/LoadingSpinner'
 
 const ENTRIES_PATH = '/api/entries'
 
-const putEntry = (payload) =>
+const putEntry = (payload: any) =>
   fetch(ENTRIES_PATH, {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -20,12 +20,12 @@ const putEntry = (payload) =>
     },
   }).then((res) => (res.ok ? res.json() : Promise.reject(res)))
 
-const useEntriesFlow = ({ initialEntries }) => {
+const useEntriesFlow = ({ initialEntries }: any) => {
   const { data: entries } = useSWR(ENTRIES_PATH, {
     initialData: initialEntries,
   })
 
-  const onSubmit = async (payload) => {
+  const onSubmit = async (payload: any) => {
     await putEntry(payload)
     await mutate(ENTRIES_PATH)
   }
@@ -44,7 +44,7 @@ const AppHead = () => (
   </Head>
 )
 
-const EntryItem = ({ entry }) => (
+const EntryItem = ({ entry }: any) => (
   <div className="flex flex-col space-y-2">
     <div className="prose dark:prose-dark w-full">{entry.message}</div>
     <div className="flex items-center space-x-3">
@@ -57,7 +57,7 @@ const EntryItem = ({ entry }) => (
   </div>
 )
 
-const EntryForm = ({ onSubmit: onSubmitProp }) => {
+const EntryForm = ({ onSubmit: onSubmitProp }: any) => {
   const initial = {
     name: '',
     message: '',
@@ -66,7 +66,7 @@ const EntryForm = ({ onSubmit: onSubmitProp }) => {
   const [formState, setFormState] = useState('initial')
   const isSubmitting = formState === 'submitting'
 
-  const onSubmit = (ev) => {
+  const onSubmit = (ev: any) => {
     ev.preventDefault()
 
     setFormState('submitting')
@@ -81,8 +81,8 @@ const EntryForm = ({ onSubmit: onSubmitProp }) => {
   }
 
   const makeOnChange =
-    (fieldName) =>
-    ({ target: { value } }) =>
+    (fieldName: any) =>
+    ({ target: { value } }: any) =>
       setValues({
         ...values,
         [fieldName]: value,

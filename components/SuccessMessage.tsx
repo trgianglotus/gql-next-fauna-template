@@ -1,4 +1,4 @@
-export default function SuccessMessage({ children }) {
+export default function SuccessMessage({ children }: any) {
   return (
     <p className="flex items-center text-sm font-bold text-green-700 dark:text-green-400">
       <svg

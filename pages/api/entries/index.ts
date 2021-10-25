@@ -1,6 +1,11 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+
 import { listGuestbookEntries, createGuestbookEntry } from '@/lib/fauna'
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const handlers = {
     GET: async () => {
       const entries = await listGuestbookEntries()

@@ -1,10 +1,10 @@
 // This script sets up the database to be used for this example application.
 // Look at the code to see what is behind the magic
-const fs = require('fs')
-const readline = require('readline')
-const request = require('request')
-const { Client, query: Q } = require('faunadb')
-const streamToPromise = require('stream-to-promise')
+import fs from 'fs'
+import readline from 'readline'
+import Client, { query as Q } from 'faunadb'
+import request from 'request'
+import streamToPromise from 'stream-to-promise'
 
 const MakeLatestEntriesIndex = () =>
   Q.CreateIndex({
@@ -86,7 +86,7 @@ const MakeGuestbookKey = () =>
     role: Q.Role('GuestbookRole'),
   })
 
-const isDatabasePrepared = ({ client }) =>
+const isDatabasePrepared = ({ client }: any) =>
   client.query(Q.Exists(Q.Index('latestEntries')))
 
 const resolveAdminKey = () => {
@@ -100,7 +100,7 @@ const resolveAdminKey = () => {
   })
 
   return new Promise((resolve, reject) => {
-    rl.question('Please provide the Fauna admin key:\n', (res) => {
+    rl.question('Please provide the Fauna admin key:\n', (res: any) => {
       rl.close()
 
       if (!res) {
@@ -114,7 +114,7 @@ const resolveAdminKey = () => {
   })
 }
 
-const importSchema = (adminKey) =>
+const importSchema = (adminKey: any) =>
   streamToPromise(
     fs.createReadStream('./schema.gql').pipe(
       request.post({
@@ -127,7 +127,7 @@ const importSchema = (adminKey) =>
     )
   ).then(String)
 
-const findImportError = (msg) => {
+const findImportError = (msg: any) => {
   switch (true) {
     case msg.startsWith('Invalid database secret'):
       return 'The secret you have provided is not valid, closing. Try again'
