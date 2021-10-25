@@ -119,7 +119,7 @@ const importSchema = (adminKey) =>
     fs.createReadStream('./schema.gql').pipe(
       request.post({
         model: 'merge',
-        uri: 'https://graphql.fauna.com/import',
+        uri: 'https://graphql.us.fauna.com/import',
         headers: {
           Authorization: `Bearer ${adminKey}`,
         },
@@ -140,7 +140,12 @@ const findImportError = (msg) => {
 
 const main = async () => {
   const adminKey = await resolveAdminKey()
-  const client = new Client({ secret: adminKey })
+  const client = new Client({
+    secret: adminKey,
+    // Change this to correct region
+    domain: 'db.us.fauna.com',
+    scheme: 'https',
+  })
 
   if (await isDatabasePrepared({ client })) {
     return console.info(
@@ -149,7 +154,12 @@ const main = async () => {
     )
   }
 
+  console.log('Just before importMsg')
+
   const importMsg = await importSchema(adminKey)
+
+  console.log(importMsg)
+
   const importErrorMsg = findImportError(importMsg)
 
   if (importErrorMsg) {
